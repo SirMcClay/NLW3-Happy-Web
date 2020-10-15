@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
+import { LeafletMouseEvent } from 'leaflet';
 import { useHistory } from "react-router-dom";
 
 import { FiArrowLeft, FiPlus } from "react-icons/fi";
@@ -10,7 +11,17 @@ import Sidebar from "../components/Sidebar";
 import { mapIcon as happyMapIcon } from '../utils/mapIcon';
 
 export default function CreateOrphanage() {
+  const [position, setPosition] = useState({ latitude: 0, longitude: 0});
   const { goBack } = useHistory();
+
+  function handleMapClick(event: LeafletMouseEvent) {
+    const { lat, lng } = event.latlng;
+
+    setPosition({
+      latitude: lat,
+      longitude: lng
+    });
+  }
 
   return (
     <div id="page-create-orphanage">
@@ -23,15 +34,25 @@ export default function CreateOrphanage() {
             <legend>Dados</legend>
 
             <Map 
-              center={[-27.2092052,-49.6401092]} 
+              center={[-3.7512974,-38.5233569]} 
               style={{ width: '100%', height: 280 }}
               zoom={15}
+              onClick={handleMapClick}
             >
               <TileLayer 
                 url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
               />
-
-              <Marker interactive={false} icon={happyMapIcon} position={[-27.2092052,-49.6401092]} />
+              
+              { position.latitude !== 0 &&
+                <Marker
+                  interactive={false}
+                  icon={happyMapIcon}
+                  position={[
+                    position.latitude,
+                    position.longitude
+                  ]} 
+                />
+              }
             </Map>
 
             <div className="input-block">
