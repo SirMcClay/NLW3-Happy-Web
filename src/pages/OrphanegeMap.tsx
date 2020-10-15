@@ -57,14 +57,14 @@ function OrphanegeMap() {
             className="map-popup"
           >
             Lar das criancas
-            <Link to="">
+            <Link to="/orphanages/1">
               <FiArrowRight size={20} color="#FFF" />
             </Link>
           </Popup>
         </Marker>
       </Map>
 
-      <Link to="" className="create-orphanage">
+      <Link to="/orphanages/create" className="create-orphanage">
         <FiPlus size={32} color="#FFF" />
       </Link>
     </div>
