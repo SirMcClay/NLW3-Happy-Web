@@ -52,10 +52,10 @@ export default function Orphanage() {
 
       <main>
         <div className="orphanage-details">
-          <img src={orphanage.images[activeImageIndex].url} alt={orphanage.name} />
+          <img src={orphanage.images.length > 0 ? orphanage.images[activeImageIndex].url : ''} alt={orphanage.name} />
 
           <div className="images">
-            {orphanage.images.map((image, index) => {
+            {orphanage.images.length > 0 ? orphanage.images.map((image, index) => {
               return (
                 <button
                   key={image.id}
@@ -68,7 +68,7 @@ export default function Orphanage() {
                   <img src={image.url} alt={orphanage.name} />
                 </button>
               );
-            })}
+            }) : null}
           </div>
           
           <div className="orphanage-details-content">
